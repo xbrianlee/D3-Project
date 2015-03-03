@@ -167,7 +167,7 @@ var graph = d3.csv(csvpath, function(data) {
         .style("position", "absolute")
         .style("z-index", "19")
         .style("width", "1px")
-        .style("height", "380px")
+        .style("height", "405px")
   //Change this variable to adjust the height of the dynamic white line.
         .style("top", "75px")
         .style("bottom", "30px")
