@@ -27,9 +27,9 @@ var tooltip = d3.select("body")
     .append("div")
     .attr("class", "remove")
     .style("position", "absolute")
-    .style("z-index", "20")
-    .style("visibility", "visible")
-    .style("top", "75px")
+    .style("z-index", "20") // z-index or "bring-to-top"
+    .style("visibility", "visible") //"visible" was originally "hidden"
+    .style("top", "75px") //height of tooltip
     .style("left", "100px");
 
 var x = d3.time.scale()
@@ -124,9 +124,42 @@ var graph = d3.csv(csvpath, function(data) {
 
   svg.selectAll(".layer")
     .attr("opacity", 1)
-    .on('mouseover', mOver)
-    .on('mousemove', mMove)
-    .on('mouseout' , mOut);
+    .on("mouseover", function(d, i) {
+      svg.selectAll(".layer").transition()
+      .duration(250)
+      .attr("opacity", function(d, j) {
+        return j != i ? 0.6 : 1;
+    })})
+
+    .on("mousemove", function(d, i) {
+      mousex = d3.mouse(this);
+      mousex = mousex[0];
+      var invertedx = x.invert(mousex);
+      invertedx = invertedx.getMonth() + invertedx.getDate();
+      var selected = (d.values);
+      for (var k = 0; k < selected.length; k++) {
+        datearray[k] = selected[k].date
+        datearray[k] = datearray[k].getMonth() + datearray[k].getDate();
+      }
+
+      mousedate = datearray.indexOf(invertedx);
+      pro = d.values[mousedate].value;
+      d3.select(this)
+      .classed("hover", true)
+      .attr("stroke", strokecolor)
+      .attr("stroke-width", "0.5px"), 
+      tooltip.html( "<p>" + d.key + "<br>" + pro + " million USD" + "</p>" ).style("visibility", "visible");
+      
+    })
+    .on("mouseout", function(d, i) {
+     svg.selectAll(".layer")
+      .transition()
+      .duration(250)
+      .attr("opacity", "1");
+      d3.select(this)
+      .classed("hover", false)
+      .attr("stroke-width", "0px"), tooltip.html( "<p>" + d.key + "<br>" + pro + " million USD" + "</p>" ).style("visibility", "visible"); //"visible" was originally "hidden"
+  })
     
   var vertical = d3.select(".chart")
         .append("div")
@@ -151,41 +184,4 @@ var graph = d3.csv(csvpath, function(data) {
          mousex = mousex[0] + 5;
          vertical.style("left", mousex + "px")});
 });
-}
-
-function mOver(d) {
-    d3.select(this)
-        .transition()
-        .duration(300)
-        .attr('stroke', 'black')
-        .attr('stroke-width', 2.5);
-}
-
-function mMove(d){
-      mousex = d3.mouse(this);
-      mousex = mousex[0];
-      var invertedx = x.invert(mousex);
-      invertedx = invertedx.getMonth() + invertedx.getDate();
-      var selected = (d.values);
-      for (var k = 0; k < selected.length; k++) {
-        datearray[k] = selected[k].date
-        datearray[k] = datearray[k].getYear() + datearray[k].getDate();
-      }
-
-      mousedate = datearray.indexOf(invertedx);
-      pro = d.values[mousedate].value;
-    d3.select(this)
-      .attr("stroke", strokecolor)
-      .attr("stroke-width", "0.5px"), 
-      tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" ).style("visibility", "visible");
-      
-}
-
-function mOut(d) {
-    d3.select(this)
-        .transition()
-        .duration(300)
-        .style('opacity', 1)
-        .attr('stroke', 'none')
-        tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" ).style("visibility", "visible");
 }
