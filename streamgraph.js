@@ -2,6 +2,76 @@ chart("data.csv", "orange");
 var datearray = [];
 var colorrange = [];
 
+/*
+function updateData() {
+    // Get the data again
+    d3.csv("data.csv", function(error, data) {
+        data.forEach(function(d) {
+            d.date = format.parse(d.date);
+            d.value = +d.value;
+            d.genre = d.genre;
+            d.total = +d.total;
+            d.company = d. company;
+            d.console = d. console;
+        });
+        // Scale the range of the data again 
+      x.domain(d3.extent(data, function(d) { return d.date; }));
+      y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
+    // Select the section we want to apply our changes to
+    var svg = d3.select("body").transition();
+    // Make the changes
+        svg.selectAll(".layer")
+            .data(layers)
+            .attr("class", "layer")
+            .attr("d", function(d) { return area(d.values); })
+            //.style("fill", function(d, i) { return z(i); });
+            .style("fill", function(d, i) {
+                if (d.values[1].genre === "simulaton") {
+                    return "#A6CEE3";
+                }
+                else if (d.values[1].genre === "Platform") {
+                    return "#33A02C";
+                }
+                else if (d.values[1].genre === "Action" || d.values[1].genre === "Adventure") {
+                    return "#1F78B4";
+                }
+                else if (d.values[1].genre === "Shooter") {
+                    return "#E31A1C";
+                }
+                else if (d.values[1].genre === "Sports" || d.values[1].genre === "Racing") {
+                    return "#FDBF6F";
+                }               
+                else if (d.values[1].genre === "Role-Playing") {
+                    return "#FF7F00";
+                }                               
+                else if (d.values[1].genre === "Educational" || d.values[1].genre === "Puzzle") {
+                    return "#6A3D9A";
+                }                
+                else if (d.values[1].genre === "Misc") {
+                    return "#FFFF99";
+                }
+                else if (d.values[1].genre === "Fighting") {
+                    return "#B15928";
+                }
+                else return "#8DD3C7";
+            });
+}
+/*       
+simulation
+Racing
+Platform
+Action
+Shooter
+Sports
+Role-Playing
+Puzzle
+Educational
+Misc
+Fighting
+Adventure
+
+*/
+
 function chart(csvpath, color) {
     if (color == "blue") {
         colorrange = ["#045A8D", "#2B8CBE", "#74A9CF", "#A6BDDB", "#D0D1E6", "#F1EEF6"];
@@ -16,22 +86,26 @@ function chart(csvpath, color) {
     strokecolor = colorrange[0];
 
     var format = d3.time.format("%m/%d/%y");
+    
     var margin = {top: 20, right: 40, bottom: 45, left: 55};
     var width = document.body.clientWidth - margin.left - margin.right;
     var height = 450 - margin.top - margin.bottom;
+    
     var tooltip = d3.select("body")
         .append("div")
         .attr("class", "remove")
         .style("position", "absolute")
         .style("z-index", "20") // z-index or "bring-to-top"
         .style("visibility", "visible") //"visible" was originally "hidden"
-        .style("top", "75px") //height of tooltip
-        .style("left", "100px");
+        .style("top", "90px") //height of tooltip
+        .style("left", "65px");
     
     var x = d3.time.scale()
         .range([0, width]);
+    
     var y = d3.scale.linear()
         .range([height-10, 0]);
+    
     var z = d3.scale.ordinal()
         .range(colorrange);
     
@@ -39,8 +113,10 @@ function chart(csvpath, color) {
         .scale(x)
         .orient("bottom")
         .ticks(d3.time.years);
+    
     var yAxis = d3.svg.axis()
         .scale(y);
+    
     var yAxisr = d3.svg.axis()
         .scale(y);
     
@@ -52,11 +128,13 @@ function chart(csvpath, color) {
     
     var nest = d3.nest()
         .key(function(d) { return d.key; });
+    
     var area = d3.svg.area()
         .interpolate("cardinal")
         .x(function(d) { return x(d.date); })
         .y0(function(d) { return y(d.y0); })
         .y1(function(d) { return y(d.y0 + d.y); });
+    
     var svg = d3.select(".chart").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -67,6 +145,10 @@ function chart(csvpath, color) {
         data.forEach(function(d) {
             d.date = format.parse(d.date);
             d.value = +d.value;
+            d.genre = d.genre;
+            d.total = +d.total;
+            d.company = d. company;
+            d.console = d. console;
         });
 
         var layers = stack(nest.entries(data));
@@ -79,7 +161,26 @@ function chart(csvpath, color) {
             .enter().append("path")
             .attr("class", "layer")
             .attr("d", function(d) { return area(d.values); })
-            .style("fill", function(d, i) { return z(i); });
+            //.style("fill", function(d, i) { return z(i); });        
+            .style("fill", function(d, i) {
+                if (d.values[1].total < 1) {
+                    return z(0);
+                }
+                else if (d.values[1].total < 2) {
+                    return z(1);
+                }
+                else if (d.values[1].total <= 5) {
+                    return z(2);
+                }
+                else if (d.values[1].total <= 10) {
+                    return z(3);
+                }
+                else if (d.values[1].total <= 20) {
+                    return z(4);
+                }
+                else return z(5);
+            });  
+            
         
         svg.append("g")
             .attr("class", "x axis")
@@ -91,7 +192,7 @@ function chart(csvpath, color) {
             .attr("x", width/2)
             .style("text-anchor", "end")
             .attr("font-size", "16px")
-            .text("Years");
+            .text("Years"); 
 
         svg.append("g")
             .attr("class", "y axis")
@@ -108,13 +209,48 @@ function chart(csvpath, color) {
             .attr("x", -130)
             .style("text-anchor", "end")
             .attr("font-size", "16px")
-            .text("Revenue in Millions of USD");
+            .text("Revenue in Millions of USD"); 
         
         svg.selectAll(".layer")
             .attr("opacity", 1)
-            .on("mouseover", mOver)
-            .on("mousemove", mMove)
-            .on("mouseout", mOut);
+            .on("mouseover", function(d, i) {
+                d3.select(this)
+                .transition()
+                .duration(250)
+                .attr('stroke', 'black')
+                .attr('stroke-width', "3px");
+            })
+            .on("mousemove", function(d, i) {
+                mousex = d3.mouse(this);
+                mousex = mousex[0];
+                var invertedx = x.invert(mousex);
+                invertedx = invertedx.getMonth() + invertedx.getDate();
+                var selected = (d.values);
+                for (var k = 0; k < selected.length; k++) {
+                    datearray[k] = selected[k].date
+                    datearray[k] = datearray[k].getMonth() + datearray[k].getDate();
+                }
+
+                mousedate = datearray.indexOf(invertedx);
+                pro = d.values[mousedate].value;
+      
+                d3.select(this)
+                    .attr("stroke", strokecolor)
+                    .attr("stroke-width", "0.5px"),
+                    tooltip.html( "<p>" + d.key + "<br>" + "Genre: " + d.values[mousedate].genre + "<br>" + "Company: " + d.values[mousedate].company + "<br>" + "Console: " + d.values[mousedate].console + "<br>" + "Annual Revenue: " + pro + " million USD" + "<br>" + "Total Revenue: " + d.values[mousedate].total + " million USD" + "<br>" + "</p>" ).style("visibility", "visible");
+      
+    })
+        
+            .on("mouseout", function(d, i) {
+                svg.selectAll(".layer")
+                    .transition()
+                    .duration(250)
+                    .attr('stroke', 'none')
+                    d3.select(this)
+                        .style('opacity', 1)
+                        .attr('stroke', 'none')
+                        tooltip.html( "<p>" + d.key + "<br>" + "Genre: " + d.values[mousedate].genre + "<br>" + "Company: " + d.values[mousedate].company + "<br>" + "Console: " + d.values[mousedate].console + "<br>" + "Annual Revenue: " + pro + " million USD" + "<br>" + "Total Revenue: " + d.values[mousedate].total + " million USD" + "<br>" + "</p>" ).style("visibility", "hidden");
+  });
         
         var vertical = d3.select(".chart")
             .append("div")
@@ -139,40 +275,4 @@ function chart(csvpath, color) {
                     mousex = mousex[0] + 5;
                     vertical.style("left", mousex + "px")});
         });
-}
-
-
-function mOver(d) {
-    d3.select(this)
-        .transition()
-        .duration(300)
-        .attr('stroke', 'black')
-        .attr('stroke-width', 2.5);
-}
-
-function mMove(d){
-    mousex = d3.mouse(this);
-    mousex = mousex[0];
-    var invertedx = x.invert(mousex);
-    invertedx = invertedx.getMonth() + invertedx.getDate();
-    var selected = (d.values);
-    for (var k = 0; k < selected.length; k++) {
-        datearray[k] = selected[k].date
-        datearray[k] = datearray[k].getYear() + datearray[k].getDate();
-    }
-    mousedate = datearray.indexOf(invertedx);
-    pro = d.values[mousedate].value;
-    d3.select(this)
-        .attr("stroke", strokecolor)
-        .attr("stroke-width", "0.5px"),
-        tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" ).style("visibility", "visible");
-}
-
-function mOut(d) {
-    d3.select(this)
-        .transition()
-        .duration(300)
-        .style('opacity', 1)
-        .attr('stroke', 'none')
-        tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" ).style("visibility", "visible");
 }
