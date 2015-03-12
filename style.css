@@ -1,5 +1,7 @@
 body {
   font: 16px sans-serif;
+  background: url(http://people.ucsc.edu/~kercoffm/1928853.jpg) repeat-x;
+  background-repeat: repeat-y;
 }
 
 .axis path, .axis line {
@@ -13,12 +15,45 @@ body {
   font-size: 11px;
 }
 
+
 text {
     stroke: black;
     stroke-width: 0.5px;
     fill: #000000;
     font-size: .7em;
     font-family:sans-serif;
+}
+
+h1 {
+    text-align:center; 
+    color:DarkOrange;
+    font-weight: bold;
+}
+
+h4 {
+    color: white;
+}
+
+ul {
+    color: white;
+}
+
+a {
+    color: CornflowerBlue;
+    text-decoration: none;
+}
+a:link{
+    color: CornflowerBlue;
+    text-decoration: none;
+}
+a:hover{
+    color: DarkOrange;
+    text-decoration: underline;
+    
+}
+a:visited {
+    color: DarkOrange;
+    text-decoration: none;
 }
 
 .label {
@@ -46,3 +81,4 @@ button {
   right: 50px;
   top: 10px;
 }
+
