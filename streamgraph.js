@@ -28,7 +28,7 @@ var tooltip = d3.select("body")
         .style("position", "absolute")
         .style("z-index", "20") // z-index or "bring-to-top"
         .style("visibility", "visible") //"visible" was originally "hidden"
-        .style("top", "90px") //height of tooltip
+        .style("top", "110px") //height of tooltip
         .style("left", "65px");
 
 var x = d3.time.scale()
@@ -117,10 +117,11 @@ var graph = d3.csv(csvpath, function(data) {
                 else return z(5);
             });  
 
-  svg.append("g")
+        svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
-            .call(xAxis)
+            .call(xAxis);
+    /*
             .append("text")
             .attr("class", "label")
             .attr("y", 40)
@@ -144,7 +145,7 @@ var graph = d3.csv(csvpath, function(data) {
             .attr("x", -130)
             .style("text-anchor", "end")
             .attr("font-size", "16px")
-            .text("Revenue in Millions of USD"); 
+            .text("Revenue in Millions of USD"); */
         
     svg.selectAll(".layer")
         .attr("opacity", 1)
@@ -195,7 +196,7 @@ var graph = d3.csv(csvpath, function(data) {
             .style("width", "1px")
             .style("height", "405px")
             //Change this variable to adjust the height of the dynamic white line.
-            .style("top", "75px")
+            .style("top", "110px")
             .style("bottom", "30px")
             .style("left", "0px")
             .style("background", "#fff");
