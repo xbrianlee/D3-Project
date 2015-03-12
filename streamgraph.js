@@ -1,97 +1,28 @@
 chart("data.csv", "orange");
+
 var datearray = [];
 var colorrange = [];
 
-/*
-function updateData() {
-    // Get the data again
-    d3.csv("data.csv", function(error, data) {
-        data.forEach(function(d) {
-            d.date = format.parse(d.date);
-            d.value = +d.value;
-            d.genre = d.genre;
-            d.total = +d.total;
-            d.company = d. company;
-            d.console = d. console;
-        });
-        // Scale the range of the data again 
-      x.domain(d3.extent(data, function(d) { return d.date; }));
-      y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
-    // Select the section we want to apply our changes to
-    var svg = d3.select("body").transition();
-    // Make the changes
-        svg.selectAll(".layer")
-            .data(layers)
-            .attr("class", "layer")
-            .attr("d", function(d) { return area(d.values); })
-            //.style("fill", function(d, i) { return z(i); });
-            .style("fill", function(d, i) {
-                if (d.values[1].genre === "simulaton") {
-                    return "#A6CEE3";
-                }
-                else if (d.values[1].genre === "Platform") {
-                    return "#33A02C";
-                }
-                else if (d.values[1].genre === "Action" || d.values[1].genre === "Adventure") {
-                    return "#1F78B4";
-                }
-                else if (d.values[1].genre === "Shooter") {
-                    return "#E31A1C";
-                }
-                else if (d.values[1].genre === "Sports" || d.values[1].genre === "Racing") {
-                    return "#FDBF6F";
-                }               
-                else if (d.values[1].genre === "Role-Playing") {
-                    return "#FF7F00";
-                }                               
-                else if (d.values[1].genre === "Educational" || d.values[1].genre === "Puzzle") {
-                    return "#6A3D9A";
-                }                
-                else if (d.values[1].genre === "Misc") {
-                    return "#FFFF99";
-                }
-                else if (d.values[1].genre === "Fighting") {
-                    return "#B15928";
-                }
-                else return "#8DD3C7";
-            });
-}
-/*       
-simulation
-Racing
-Platform
-Action
-Shooter
-Sports
-Role-Playing
-Puzzle
-Educational
-Misc
-Fighting
-Adventure
-
-*/
-
 function chart(csvpath, color) {
-    if (color == "blue") {
-        colorrange = ["#045A8D", "#2B8CBE", "#74A9CF", "#A6BDDB", "#D0D1E6", "#F1EEF6"];
-    }
-    else if (color == "pink") {
-        colorrange = ["#980043", "#DD1C77", "#DF65B0", "#C994C7", "#D4B9DA", "#F1EEF6"];
-    }
-    else if (color == "orange") {
-        colorrange = ["#B30000", "#E34A33", "#FC8D59", "#FDBB84", "#FDD49E", "#FEF0D9"];
-    }
 
-    strokecolor = colorrange[0];
+if (color == "blue") {
+  colorrange = ["#045A8D", "#2B8CBE", "#74A9CF", "#A6BDDB", "#D0D1E6", "#F1EEF6"];
+}
+else if (color == "pink") {
+  colorrange = ["#980043", "#DD1C77", "#DF65B0", "#C994C7", "#D4B9DA", "#F1EEF6"];
+}
+else if (color == "orange") {
+  colorrange = ["#B30000", "#E34A33", "#FC8D59", "#FDBB84", "#FDD49E", "#FEF0D9"];
+}
+strokecolor = colorrange[0];
 
-    var format = d3.time.format("%m/%d/%y");
-    
-    var margin = {top: 20, right: 40, bottom: 45, left: 55};
-    var width = document.body.clientWidth - margin.left - margin.right;
-    var height = 450 - margin.top - margin.bottom;
-    
-    var tooltip = d3.select("body")
+var format = d3.time.format("%m/%d/%y");
+
+var margin = {top: 20, right: 40, bottom: 45, left: 55};
+var width = document.body.clientWidth - margin.left - margin.right;
+var height = 450 - margin.top - margin.bottom;
+
+var tooltip = d3.select("body")
         .append("div")
         .attr("class", "remove")
         .style("position", "absolute")
@@ -99,64 +30,69 @@ function chart(csvpath, color) {
         .style("visibility", "visible") //"visible" was originally "hidden"
         .style("top", "90px") //height of tooltip
         .style("left", "65px");
-    
-    var x = d3.time.scale()
-        .range([0, width]);
-    
-    var y = d3.scale.linear()
-        .range([height-10, 0]);
-    
-    var z = d3.scale.ordinal()
-        .range(colorrange);
-    
-    var xAxis = d3.svg.axis()
-        .scale(x)
-        .orient("bottom")
-        .ticks(d3.time.years);
-    
-    var yAxis = d3.svg.axis()
-        .scale(y);
-    
-    var yAxisr = d3.svg.axis()
-        .scale(y);
-    
-    var stack = d3.layout.stack()
-        .offset("silhouette")
-        .values(function(d) { return d.values; })
-        .x(function(d) { return d.date; })
-        .y(function(d) { return d.value; });
-    
-    var nest = d3.nest()
-        .key(function(d) { return d.key; });
-    
-    var area = d3.svg.area()
-        .interpolate("cardinal")
-        .x(function(d) { return x(d.date); })
-        .y0(function(d) { return y(d.y0); })
-        .y1(function(d) { return y(d.y0 + d.y); });
-    
-    var svg = d3.select(".chart").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    
-    var graph = d3.csv(csvpath, function(data) {
-        data.forEach(function(d) {
-            d.date = format.parse(d.date);
-            d.value = +d.value;
-            d.genre = d.genre;
-            d.total = +d.total;
-            d.company = d. company;
-            d.console = d. console;
-        });
 
-        var layers = stack(nest.entries(data));
-        
-        x.domain(d3.extent(data, function(d) { return d.date; }));
-        y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
-        
-        svg.selectAll(".layer")
+var x = d3.time.scale()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height-10, 0]);
+
+var z = d3.scale.ordinal()
+    .range(colorrange);
+
+//Custom axis scale
+var axisScale = d3.scale.linear()
+                        .domain([2005,2015])
+                        .range([0,width]);
+    
+var xAxis = d3.svg.axis()
+    .scale(axisScale)
+    .orient("bottom")
+    .tickFormat(d3.format("d"));
+
+var yAxis = d3.svg.axis()
+    .scale(y);
+
+var yAxisr = d3.svg.axis()
+    .scale(y);
+
+var stack = d3.layout.stack()
+    .offset("silhouette")
+    .values(function(d) { return d.values; })
+    .x(function(d) { return d.date; })
+    .y(function(d) { return d.value; });
+
+var nest = d3.nest()
+    .key(function(d) { return d.key; });
+
+var area = d3.svg.area()
+    .interpolate("cardinal")
+    .x(function(d) { return x(d.date); })
+    .y0(function(d) { return y(d.y0); })
+    .y1(function(d) { return y(d.y0 + d.y); });
+
+var svg = d3.select(".chart").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var graph = d3.csv(csvpath, function(data) {
+  data.forEach(function(d) {
+    d.date = format.parse(d.date);
+    d.value = +d.value;
+    d.genre = d. genre;
+    d.total = d.total;
+    d.company = d. company;
+    d.console = d. console;
+  });
+
+  var layers = stack(nest.entries(data));
+
+  x.domain(d3.extent(data, function(d) { return d.date; }));
+  y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
+
+  svg.selectAll(".layer")
             .data(layers)
             .enter().append("path")
             .attr("class", "layer")
@@ -180,9 +116,8 @@ function chart(csvpath, color) {
                 }
                 else return z(5);
             });  
-            
-        
-        svg.append("g")
+
+  svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis)
@@ -211,13 +146,13 @@ function chart(csvpath, color) {
             .attr("font-size", "16px")
             .text("Revenue in Millions of USD"); 
         
-        svg.selectAll(".layer")
-            .attr("opacity", 1)
-            .on("mouseover", function(d, i) {
-                d3.select(this)
-                .transition()
-                .duration(250)
-                .attr('stroke', 'black')
+    svg.selectAll(".layer")
+        .attr("opacity", 1)
+        .on("mouseover", function(d, i) {
+            d3.select(this)
+            .transition()
+            //.duration(250)
+            .attr('stroke', 'black')
                 .attr('stroke-width', "3px");
             })
             .on("mousemove", function(d, i) {
@@ -233,14 +168,14 @@ function chart(csvpath, color) {
 
                 mousedate = datearray.indexOf(invertedx);
                 pro = d.values[mousedate].value;
-      
+
                 d3.select(this)
                     .attr("stroke", strokecolor)
                     .attr("stroke-width", "0.5px"),
                     tooltip.html( "<p>" + d.key + "<br>" + "Genre: " + d.values[mousedate].genre + "<br>" + "Company: " + d.values[mousedate].company + "<br>" + "Console: " + d.values[mousedate].console + "<br>" + "Annual Revenue: " + pro + " million USD" + "<br>" + "Total Revenue: " + d.values[mousedate].total + " million USD" + "<br>" + "</p>" ).style("visibility", "visible");
-      
+
     })
-        
+
             .on("mouseout", function(d, i) {
                 svg.selectAll(".layer")
                     .transition()
@@ -251,7 +186,7 @@ function chart(csvpath, color) {
                         .attr('stroke', 'none')
                         tooltip.html( "<p>" + d.key + "<br>" + "Genre: " + d.values[mousedate].genre + "<br>" + "Company: " + d.values[mousedate].company + "<br>" + "Console: " + d.values[mousedate].console + "<br>" + "Annual Revenue: " + pro + " million USD" + "<br>" + "Total Revenue: " + d.values[mousedate].total + " million USD" + "<br>" + "</p>" ).style("visibility", "hidden");
   });
-        
+
         var vertical = d3.select(".chart")
             .append("div")
             .attr("class", "remove")
@@ -264,15 +199,16 @@ function chart(csvpath, color) {
             .style("bottom", "30px")
             .style("left", "0px")
             .style("background", "#fff");
-        
-        d3.select(".chart")
-            .on("mousemove", function(){
-                    mousex = d3.mouse(this);
-                    mousex = mousex[0] + 5;
-                    vertical.style("left", mousex + "px" )})
-            .on("mouseover", function(){
-                    mousex = d3.mouse(this);
-                    mousex = mousex[0] + 5;
-                    vertical.style("left", mousex + "px")});
-        });
+
+    d3.select(".chart")
+        .on("mousemove", function(){
+                mousex = d3.mouse(this);
+                mousex = mousex[0] + 5;
+                vertical.style("left", mousex + "px" )})
+        .on("mouseover", function(){
+                mousex = d3.mouse(this);
+                mousex = mousex[0] + 5;
+                vertical.style("left", mousex + "px")});
+    });
 }
+
