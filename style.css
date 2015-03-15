@@ -81,3 +81,18 @@ button {
   right: 50px;
   top: 10px;
 }
+
+#required_content{
+    float: right;
+    width: 48%;
+}
+
+#d3_content{
+    float: left;
+    width: 48%;
+    color: white;
+}
+
+#tooltip_placement {
+    
+}
