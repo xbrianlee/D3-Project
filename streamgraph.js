@@ -1,7 +1,55 @@
-chart("data.csv", "orange");
+chart("data_by_revenue.csv", "orange");
 
 var datearray = [];
 var colorrange = [];
+
+function updateData() {  
+    var graph = document.getElementById("graph");
+    var line = document.getElementById("line");  
+    graph.remove();
+    line.remove();
+    chart("data_by_revenue.csv", "orange"); 
+}
+
+function updateData1() {  
+    var graph = document.getElementById("graph");
+    var line = document.getElementById("line");  
+    graph.remove();
+    line.remove();
+    chart("data_by_action_genre.csv", "blue");
+}
+
+function updateData2() {  
+    var graph = document.getElementById("graph");
+    var line = document.getElementById("line");  
+    graph.remove();
+    line.remove();
+    chart("data_by_rp_genre.csv", "blue");
+}
+
+function updateData3() {  
+    var graph = document.getElementById("graph");
+    var line = document.getElementById("line");  
+    graph.remove();
+    line.remove();
+    chart("data_by_shooter_genre.csv", "blue");
+}
+
+function updateData4() {  
+    var graph = document.getElementById("graph");
+    var line = document.getElementById("line");  
+    graph.remove();
+    line.remove();
+    chart("data_by_consoles.csv", "pink");
+}
+
+function updateData5() {  
+    var graph = document.getElementById("graph");
+    var line = document.getElementById("line");  
+    graph.remove();
+    line.remove();
+    chart("data_by_handhelds.csv", "pink");
+}
 
 function chart(csvpath, color) {
 
@@ -18,7 +66,7 @@ strokecolor = colorrange[0];
 
 var format = d3.time.format("%m/%d/%y");
 
-var margin = {top: 20, right: 40, bottom: 45, left: 55};
+var margin = {top: 20, right: 40, bottom: 45, left: 25};
 var width = document.body.clientWidth - margin.left - margin.right;
 var height = 450 - margin.top - margin.bottom;
 
@@ -72,6 +120,7 @@ var area = d3.svg.area()
     .y1(function(d) { return y(d.y0 + d.y); });
 
 var svg = d3.select(".chart").append("svg")
+    .attr("id", "graph")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -174,7 +223,7 @@ var graph = d3.csv(csvpath, function(data) {
 
                 d3.select(this)
                     .attr("stroke-width", "2px"),
-                    tooltip.html( "<h4>" + d.key + "<br>" + "Genre: " + d.values[mousedate].genre + "<br>" + "Company: " + d.values[mousedate].company + "<br>" + "Console: " + d.values[mousedate].console + "<br>" + "Annual Revenue: " + pro + " million USD" + "<br>" + "Total Revenue: " + d.values[mousedate].total + " million USD" + "<br>" + "</h4>" ).style("visibility", "visible");
+                    tooltip.html( "<h4>" + d.key + "<br>" + "Genre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].genre + "<br>" + "Company&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].company + "<br>" + "Console&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].console + "<br>" + "Annual Revenue&nbsp;: " + pro + " million USD" + "<br>" + "Total Revenue&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].total + " million USD" + "<br>" + "</h4>" ).style("visibility", "visible");
 
     })
 
@@ -185,18 +234,19 @@ var graph = d3.csv(csvpath, function(data) {
                     .attr('opacity', 1)
                     d3.select(this)
                         .attr('stroke', 'none')
-                        tooltip.html( "<h4>" + d.key + "<br>" + "Genre: " + d.values[mousedate].genre + "<br>" + "Company: " + d.values[mousedate].company + "<br>" + "Console: " + d.values[mousedate].console + "<br>" + "Annual Revenue: " + pro + " million USD" + "<br>" + "Total Revenue: " + d.values[mousedate].total + " million USD" + "<br>" + "</h4>" ).style("visibility", "hidden");
+                        tooltip.html( "<h4>" + d.key + "<br>" + "Genre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].genre + "<br>" + "Company&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].company + "<br>" + "Console&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].console + "<br>" + "Annual Revenue&nbsp;: " + pro + " million USD" + "<br>" + "Total Revenue&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].total + " million USD" + "<br>" + "</h4>" ).style("visibility", "hidden");
   });
 
         var vertical = d3.select(".chart")
             .append("div")
             .attr("class", "remove")
+            .attr("id", "line")
             .style("position", "absolute")
             .style("z-index", "19")
             .style("width", "1px")
             .style("height", "405px")
             //Change this variable to adjust the height of the dynamic white line.
-            .style("top", "110px")
+            .style("top", "127px")
             .style("bottom", "30px")
             .style("left", "0px")
             .style("background", "#fff");
