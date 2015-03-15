@@ -1,4 +1,4 @@
-chart("data.csv", "orange");
+chart("data-2014-none.csv", "orange");
 
 var datearray = [];
 var colorrange = [];
@@ -42,7 +42,7 @@ var z = d3.scale.ordinal()
 
 //Custom axis scale
 var axisScale = d3.scale.linear()
-                        .domain([2005,2015])
+                        .domain([2005,2014])
                         .range([0,width]);
     
 var xAxis = d3.svg.axis()
@@ -96,13 +96,15 @@ var graph = d3.csv(csvpath, function(data) {
             .data(layers)
             .enter().append("path")
             .attr("class", "layer")
+            .attr("stroke", "#DCDCDC")
+            .attr("width", "2px")
             .attr("d", function(d) { return area(d.values); })
             //.style("fill", function(d, i) { return z(i); });        
             .style("fill", function(d, i) {
                 if (d.values[1].total < 1) {
                     return z(0);
                 }
-                else if (d.values[1].total < 2) {
+                else if (d.values[1].total <= 2) {
                     return z(1);
                 }
                 else if (d.values[1].total <= 5) {
@@ -153,8 +155,8 @@ var graph = d3.csv(csvpath, function(data) {
             d3.select(this)
             .transition()
             //.duration(250)
-            .attr('stroke', 'black')
-                .attr('stroke-width', "3px");
+                //.attr('stroke-width', "3px");
+                .attr('opacity',".4");
             })
             .on("mousemove", function(d, i) {
                 mousex = d3.mouse(this);
@@ -171,8 +173,7 @@ var graph = d3.csv(csvpath, function(data) {
                 pro = d.values[mousedate].value;
 
                 d3.select(this)
-                    .attr("stroke", strokecolor)
-                    .attr("stroke-width", "0.5px"),
+                    .attr("stroke-width", "2px"),
                     tooltip.html( "<p>" + d.key + "<br>" + "Genre: " + d.values[mousedate].genre + "<br>" + "Company: " + d.values[mousedate].company + "<br>" + "Console: " + d.values[mousedate].console + "<br>" + "Annual Revenue: " + pro + " million USD" + "<br>" + "Total Revenue: " + d.values[mousedate].total + " million USD" + "<br>" + "</p>" ).style("visibility", "visible");
 
     })
@@ -181,9 +182,8 @@ var graph = d3.csv(csvpath, function(data) {
                 svg.selectAll(".layer")
                     .transition()
                     .duration(250)
-                    .attr('stroke', 'none')
+                    .attr('opacity', 1)
                     d3.select(this)
-                        .style('opacity', 1)
                         .attr('stroke', 'none')
                         tooltip.html( "<p>" + d.key + "<br>" + "Genre: " + d.values[mousedate].genre + "<br>" + "Company: " + d.values[mousedate].company + "<br>" + "Console: " + d.values[mousedate].console + "<br>" + "Annual Revenue: " + pro + " million USD" + "<br>" + "Total Revenue: " + d.values[mousedate].total + " million USD" + "<br>" + "</p>" ).style("visibility", "hidden");
   });
