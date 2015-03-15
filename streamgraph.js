@@ -24,12 +24,12 @@ var height = 450 - margin.top - margin.bottom;
 
 var tooltip = d3.select("body")
         .append("div")
-        .attr("class", "remove")
+        .attr("id", "tooptip_content")
         .style("position", "absolute")
         .style("z-index", "20") // z-index or "bring-to-top"
         .style("visibility", "visible") //"visible" was originally "hidden"
-        .style("top", "110px") //height of tooltip
-        .style("left", "65px");
+        .attr("font-size", "20px")
+        .style("color", "white");
 
 var x = d3.time.scale()
     .range([0, width]);
@@ -80,9 +80,9 @@ var svg = d3.select(".chart").append("svg")
 var graph = d3.csv(csvpath, function(data) {
   data.forEach(function(d) {
     d.date = format.parse(d.date);
-    d.value = +d.value;
+    d.value = d3.round(+d.value, 2);
     d.genre = d. genre;
-    d.total = d.total;
+    d.total = d3.round(d.total, 2);
     d.company = d. company;
     d.console = d. console;
   });
@@ -174,7 +174,7 @@ var graph = d3.csv(csvpath, function(data) {
 
                 d3.select(this)
                     .attr("stroke-width", "2px"),
-                    tooltip.html( "<p>" + d.key + "<br>" + "Genre: " + d.values[mousedate].genre + "<br>" + "Company: " + d.values[mousedate].company + "<br>" + "Console: " + d.values[mousedate].console + "<br>" + "Annual Revenue: " + pro + " million USD" + "<br>" + "Total Revenue: " + d.values[mousedate].total + " million USD" + "<br>" + "</p>" ).style("visibility", "visible");
+                    tooltip.html( "<h4>" + d.key + "<br>" + "Genre: " + d.values[mousedate].genre + "<br>" + "Company: " + d.values[mousedate].company + "<br>" + "Console: " + d.values[mousedate].console + "<br>" + "Annual Revenue: " + pro + " million USD" + "<br>" + "Total Revenue: " + d.values[mousedate].total + " million USD" + "<br>" + "</h4>" ).style("visibility", "visible");
 
     })
 
@@ -185,7 +185,7 @@ var graph = d3.csv(csvpath, function(data) {
                     .attr('opacity', 1)
                     d3.select(this)
                         .attr('stroke', 'none')
-                        tooltip.html( "<p>" + d.key + "<br>" + "Genre: " + d.values[mousedate].genre + "<br>" + "Company: " + d.values[mousedate].company + "<br>" + "Console: " + d.values[mousedate].console + "<br>" + "Annual Revenue: " + pro + " million USD" + "<br>" + "Total Revenue: " + d.values[mousedate].total + " million USD" + "<br>" + "</p>" ).style("visibility", "hidden");
+                        tooltip.html( "<h4>" + d.key + "<br>" + "Genre: " + d.values[mousedate].genre + "<br>" + "Company: " + d.values[mousedate].company + "<br>" + "Console: " + d.values[mousedate].console + "<br>" + "Annual Revenue: " + pro + " million USD" + "<br>" + "Total Revenue: " + d.values[mousedate].total + " million USD" + "<br>" + "</h4>" ).style("visibility", "hidden");
   });
 
         var vertical = d3.select(".chart")
