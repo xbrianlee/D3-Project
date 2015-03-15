@@ -1,23 +1,26 @@
- <!-- NOTE: csv file cannot contain value data that is under 0.001 -->
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Revenue of Best Sold Video Games</title>
+        <title>Top Video Game Revenues</title>
         <link rel="stylesheet" type="text/css" href="style.css">
         <script type= "text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
     </head>
     <body>
-        <h1> Revenue of Best Sold Video Games</h1>
-                <div id="option">
+        <h1>The Revenue of Top Selling Video Games Since 2005</h1>
+                <div id="genreButton">
             <input name="updateButton" 
                 type="button" 
                 value="Filter by Genre" 
                 onclick="updateData()" />
         </div>
-        <br>
         <div class="chart"></div>
         <script type="text/javascript" src="streamgraph.js"></script>
+        <div id="d3_content">
+            <br/><br/><br/><br/><br/><br/><br/><br/>
+            Here's our beginning text.
+        </div>
+        <div id="required_content">
         <h4>Created by: Evan Morrison, Brian Lee, Kelsey Coffman, Delan Diaz</h4>
         <h4>CMPS 165 - Data Programming for Visualization - Winter 2015 - Instructor: Suresh K. Lodha</h4>
         <h4>Files Submitted:</h4>
@@ -33,5 +36,6 @@
           <li><a href="http://www.vgchartz.com/">Video Game Charts &amp; Game Sales Data</a></li>
             <li><a href="http://www.nytimes.com/interactive/2008/02/23/movies/20080223_REVENUE_GRAPHIC.html?_r=0">The Ebb and Flow of Movies</a></li>
         </ul>    
+            </div>
     </body>
 </html>
