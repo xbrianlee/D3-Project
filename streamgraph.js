@@ -527,37 +527,6 @@ var graph = d3.csv(csvpath, function(data) {
             .style("top", "143px")
             .style("bottom", "0px");
     
-    var vertical = d3.select(".chart")
-            .append("div")
-            .attr("class", "remove")
-            .attr("id", "line")
-            .style("position", "absolute")
-            .style("z-index", "19")
-            .style("width", "1px")
-            .style("height", "400px")
-            //Change this variable to adjust the height of the dynamic white line.
-            .style("top", "270px")
-            .style("bottom", "30px")
-            .style("left", "0px")
-            .style("background", "#fff")
-            .style("visibility", "visible");
-
-
-    
-    //Changes position of white line
-    d3.select(".chart")
-        .on("mousemove", function(){
-                mousex = d3.mouse(this);
-                mousex = mousex[0] + 5;
-                vertical.style("left", mousex + "px" )
-                vertical.style("visibility", "visible")})
-        .on("mouseover", function(){
-                mousex = d3.mouse(this);
-                mousex = mousex[0] + 5;
-                vertical.style("left", mousex + "px")
-                vertical.style("visibility", "visible")})
-        .on("mouseout", function(){
-                    vertical.style("visibility", "hidden")});
     });
     
 }
