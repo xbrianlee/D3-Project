@@ -66,7 +66,7 @@ strokecolor = colorrange[0];
 
 var format = d3.time.format("%m/%d/%y");
 
-var margin = {top: 20, right: 40, bottom: 45, left: 25};
+var margin = {top: 20, right: 200, bottom: 45, left: 25};
 var width = document.body.clientWidth - margin.left - margin.right;
 var height = 450 - margin.top - margin.bottom;
 
@@ -233,10 +233,10 @@ var graph = d3.csv(csvpath, function(data) {
                     .duration(250)
                     .attr('opacity', 1)
                     d3.select(this)
-                        .attr('stroke', '1px')
+                        .attr('stroke-width', '1px')
                         tooltip.html( "<h4>" + d.key + "<br>" + "Genre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].genre + "<br>" + "Company&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].company + "<br>" + "Console&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].console + "<br>" + "Annual Revenue&nbsp;: " + pro + " million USD" + "<br>" + "Total Revenue&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].total + " million USD" + "<br>" + "</h4>" ).style("visibility", "hidden");
   });
-
+    
         var vertical = d3.select(".chart")
             .append("div")
             .attr("class", "remove")
@@ -251,6 +251,20 @@ var graph = d3.csv(csvpath, function(data) {
             .style("left", "0px")
             .style("background", "#fff");
 
+         var yAxisDiv = d3.select(".chart")
+            .append("div")
+            .attr("class", "remove")
+            .attr("id", "line")
+            .style("position", "absolute")
+            .style("z-index", "19")
+            .style("width", "2px")
+            .style("height", "400px")
+            //Change this variable to adjust the height of the dynamic white line.
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .style("right", (margin.right - 11 + "px"))
+            .style("background", "#000000");
+    
     d3.select(".chart")
         .on("mousemove", function(){
                 mousex = d3.mouse(this);
@@ -262,4 +276,3 @@ var graph = d3.csv(csvpath, function(data) {
                 vertical.style("left", mousex + "px")});
     });
 }
-
