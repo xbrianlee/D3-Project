@@ -263,7 +263,7 @@ var graph = d3.csv(csvpath, function(data) {
             .style("font-size", "14px")
             .style("top", "143px")
             .style("bottom", "0px")
-            .text("in revenue");
+            .text("in revenue.");
     
         //Text for Height portion
         var LegendInfo3 = d3.select("svg")
@@ -316,12 +316,12 @@ var graph = d3.csv(csvpath, function(data) {
             .style("font-size", "14px")
             .style("top", "143px")
             .style("bottom", "0px")
-            .text("the");
+            .text("The");
     
         var LegendInfo8 = d3.select("svg")
             .append("text")
             .attr("y", 190)
-            .attr("x", width + 63)
+            .attr("x", width + 67)
             .attr("font-weight", "bold")
             .style("font-size", "14px")
             .style("top", "143px")
@@ -331,7 +331,7 @@ var graph = d3.csv(csvpath, function(data) {
         var LegendInfo9 = d3.select("svg")
             .append("text")
             .attr("y", 190)
-            .attr("x", width + 94)
+            .attr("x", width + 100)
             .style("font-size", "14px")
             .style("top", "143px")
             .style("bottom", "0px")
@@ -390,7 +390,7 @@ var graph = d3.csv(csvpath, function(data) {
             .style("font-size", "14px")
             .style("top", "143px")
             .style("bottom", "0px")
-            .text("through 2014");
+            .text("through 2014.");
     
     
     //Legend code for total revenue
