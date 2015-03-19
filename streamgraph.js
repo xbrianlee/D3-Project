@@ -66,7 +66,7 @@ strokecolor = colorrange[0];
 
 var format = d3.time.format("%m/%d/%y");
 
-var margin = {top: 20, right: 45, bottom: 45, left: 25};
+var margin = {top: 20, right: 200, bottom: 45, left: 25};
 var width = document.body.clientWidth - margin.left - margin.right;
 var height = 450 - margin.top - margin.bottom;
 
@@ -223,7 +223,7 @@ var graph = d3.csv(csvpath, function(data) {
 
                 d3.select(this)
                     .attr("stroke-width", "2px"),
-                    tooltip.html( "<h4>" + d.key + "<br>" + "Genre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].genre + "<br>" + "Company&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].company + "<br>" + "Console&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].console + "<br>" + "Annual Revenue&nbsp;: " + pro + " million USD" + "<br>" + "Total Revenue&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].total + " million USD" + "<br>" + "</h4>" ).style("visibility", "visible");
+                    tooltip.html( "<h4>" + d.key + "<br>" + "Genre:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + d.values[mousedate].genre + "<br>" + "Company:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + d.values[mousedate].company + "<br>" + "Console:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + d.values[mousedate].console + "<br>" + "Annual Revenue:&nbsp; " + pro + " million USD" + "<br>" + "Total Revenue:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + d.values[mousedate].total + " million USD" + "<br>" + "</h4>" ).style("visibility", "visible");
 
     })
 
@@ -234,45 +234,341 @@ var graph = d3.csv(csvpath, function(data) {
                     .attr('opacity', 1)
                     d3.select(this)
                         .attr('stroke-width', '1px')
-                        tooltip.html( "<h4>" + d.key + "<br>" + "Genre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].genre + "<br>" + "Company&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].company + "<br>" + "Console&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].console + "<br>" + "Annual Revenue&nbsp;: " + pro + " million USD" + "<br>" + "Total Revenue&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].total + " million USD" + "<br>" + "</h4>" ).style("visibility", "hidden");
+                        tooltip.html( "<h4>" + d.key + "<br>" + "Genre:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + d.values[mousedate].genre + "<br>" + "Company:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + d.values[mousedate].company + "<br>" + "Console:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + d.values[mousedate].console + "<br>" + "Annual Revenue:&nbsp; " + pro + " million USD" + "<br>" + "Total Revenue:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + d.values[mousedate].total + " million USD" + "<br>" + "</h4>" ).style("visibility", "hidden");
   });
     
-        var vertical = d3.select(".chart")
+    //Code for legend items begins here
+        var LegendInfo1 = d3.select("svg")
+            .append("text")
+            .attr("y", 40)
+            .attr("x", width + 40)
+            .style("font-size", "14px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("Each shape shows how");
+    
+        var LegendInfo2 = d3.select("svg")
+            .append("text")
+            .attr("y", 55)
+            .attr("x", width + 40)
+            .style("font-size", "14px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("much one game earned");
+    
+        var LegendInfo2 = d3.select("svg")
+            .append("text")
+            .attr("y", 70)
+            .attr("x", width + 40)
+            .style("font-size", "14px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("in revenue");
+    
+        //Text for Height portion
+        var LegendInfo3 = d3.select("svg")
+            .append("text")
+            .attr("y", 100)
+            .attr("x", width + 40)
+            .style("font-size", "16px")
+            .attr("font-weight", "bold")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("Height:");
+        
+    
+        var LegendInfo4 = d3.select("svg")
+            .append("text")
+            .attr("y", 115)
+            .attr("x", width + 40)
+            .style("font-size", "14px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("shows yearly revenue");
+    
+    
+        //Text for Width portion
+        var LegendInfo5 = d3.select("svg")
+            .append("text")
+            .attr("y", 145)
+            .attr("x", width + 40)
+            .style("font-size", "16px")
+            .attr("font-weight", "bold")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("Width:");
+            
+        var LegendInfo6 = d3.select("svg")
+            .append("text")
+            .attr("y", 160)
+            .attr("x", width + 40)
+            .style("font-size", "14px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("shows longevity");
+    
+    
+        //This is "The area of the shape (and its color) corresponds to the game's total lifetime revenue through the end of 2014"
+        var LegendInfo7 = d3.select("svg")
+            .append("text")
+            .attr("y", 190)
+            .attr("x", width + 40)
+            .style("font-size", "14px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("the");
+    
+        var LegendInfo8 = d3.select("svg")
+            .append("text")
+            .attr("y", 190)
+            .attr("x", width + 63)
+            .attr("font-weight", "bold")
+            .style("font-size", "14px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("area");
+            
+        var LegendInfo9 = d3.select("svg")
+            .append("text")
+            .attr("y", 190)
+            .attr("x", width + 94)
+            .style("font-size", "14px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("of the shape");
+    
+        var LegendInfo10 = d3.select("svg")
+            .append("text")
+            .attr("y", 205)
+            .attr("x", width + 40)
+            .style("font-size", "14px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("(and its ");
+    
+        var LegendInfo11 = d3.select("svg")
+            .append("text")
+            .attr("y", 205)
+            .attr("x", width + 91)
+            .style("font-size", "14px")
+            .attr("font-weight", "bold")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("color");
+    
+        var LegendInfo12 = d3.select("svg")
+            .append("text")
+            .attr("y", 205)
+            .attr("x", width + 127)
+            .style("font-size", "14px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text(")");
+    
+        var LegendInfo13 = d3.select("svg")
+            .append("text")
+            .attr("y", 220)
+            .attr("x", width + 40)
+            .style("font-size", "14px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("corresponds to the");
+    
+        var LegendInfo14 = d3.select("svg")
+            .append("text")
+            .attr("y", 235)
+            .attr("x", width + 40)
+            .style("font-size", "14px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("game's total revenue");
+    
+        var LegendInfo14 = d3.select("svg")
+            .append("text")
+            .attr("y", 250)
+            .attr("x", width + 40)
+            .style("font-size", "14px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("through 2014");
+    
+    
+    //Legend code for total revenue
+    var LegendHeader = d3.select("svg")
+            .append("text")
+            .attr("y", 85 + (height/2))
+            .attr("x", width + 55)
+            .style("font-size", "14px")
+            .style("font-weight", "bold")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("Total Revenue"); 
+    
+    var textItem1 = d3.select("svg")
+            .append("text")
+            .attr("y", 105 + (height/2))
+            .attr("x", width + 80)
+            .style("font-size", "16px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("< $1 million"); 
+                
+       var textItem2 = d3.select("svg")
+            .append("text")
+            .attr("y", 125 + (height/2))
+            .attr("x", width + 80)
+            .style("font-size", "16px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("< $2 million"); 
+    
+       var textItem3 = d3.select("svg")
+            .append("text")
+            .attr("y", 145 + (height/2))
+            .attr("x", width + 80)
+            .style("font-size", "16px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("< $5 million"); 
+                
+       var textItem4 = d3.select("svg")
+            .append("text")
+            .attr("y", 165 + (height/2))
+            .attr("x", width + 80)
+            .style("font-size", "16px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("< $10 million"); 
+                       
+       var textItem5 = d3.select("svg")
+            .append("text")
+            .attr("y", 185 + (height/2))
+            .attr("x", width + 80)
+            .style("font-size", "16px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("< $20 million"); 
+    
+        var textItem6 = d3.select("svg")
+            .append("text")
+            .attr("y", 205 + (height/2))
+            .attr("x", width + 80)
+            .style("font-size", "16px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+            .text("$20+ million"); 
+    
+        //Code for creating rectangles and corresponding colors in legend
+         var rectLeg1 = d3.select("svg")
+            .append("rect")
+            .attr("y", 92 + (height/2))
+            .attr("x", width + 60)
+            .attr("width", 16)
+            .attr("height", 16)
+            .style("fill", z(0))
+            .attr("font-size", "16px")
+            .style("top", "143px")
+            .style("bottom", "0px") 
+                 
+         var rectLeg2 = d3.select("svg")
+            .append("rect")
+            .attr("y", 112 + (height/2))
+            .attr("x", width + 60)
+            .attr("width", 16)
+            .attr("height", 16)
+            .style("fill", z(1))
+            .attr("font-size", "16px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+         
+         var rectLeg3 = d3.select("svg")
+            .append("rect")
+            .attr("y", 132 + (height/2))
+            .attr("x", width + 60)
+            .attr("width", 16)
+            .attr("height", 16)
+            .style("fill", z(2))
+            .attr("font-size", "16px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+                  
+         var rectLeg4 = d3.select("svg")
+            .append("rect")
+            .attr("y", 152 + (height/2))
+            .attr("x", width + 60)
+            .attr("width", 16)
+            .attr("height", 16)
+            .style("fill", z(3))
+            .attr("font-size", "16px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+         
+          var rectLeg5 = d3.select("svg")
+            .append("rect")
+            .attr("y", 172 + (height/2))
+            .attr("x", width + 60)
+            .attr("width", 16)
+            .attr("height", 16)
+            .style("fill", z(4))
+            .attr("font-size", "16px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+          
+          var rectLeg6 = d3.select("svg")
+            .append("rect")
+            .attr("y",192 + (height/2))
+            .attr("x", width + 60)
+            .attr("width", 16)
+            .attr("height", 16)
+            .style("fill", z(5))
+            .attr("font-size", "16px")
+            .style("top", "143px")
+            .style("bottom", "0px")
+    
+    var vertical = d3.select(".chart")
             .append("div")
             .attr("class", "remove")
             .attr("id", "line")
             .style("position", "absolute")
             .style("z-index", "19")
             .style("width", "1px")
-            .style("height", "405px")
+            .style("height", "400px")
             //Change this variable to adjust the height of the dynamic white line.
-            .style("top", "127px")
+            .style("top", "270px")
             .style("bottom", "30px")
             .style("left", "0px")
-            .style("background", "#fff");
-/*
+            .style("background", "#fff")
+            .style("visibility", "visible");
+
+        //Vertical bar at end of chart
          var yAxisDiv = d3.select(".chart")
             .append("div")
             .attr("class", "remove")
             .attr("id", "line")
             .style("position", "absolute")
             .style("z-index", "19")
-            .style("width", "2px")
+            .style("width", "1px")
             .style("height", "400px")
             //Change this variable to adjust the height of the dynamic white line.
-            .style("top", "143px")
+            .style("top", "270px")
             .style("bottom", "0px")
             .style("right", (margin.right - 11 + "px"))
-            .style("background", "#000000");*/
+            .style("background", "#000000");
     
+    //Changes position of white line
     d3.select(".chart")
         .on("mousemove", function(){
                 mousex = d3.mouse(this);
                 mousex = mousex[0] + 5;
-                vertical.style("left", mousex + "px" )})
+                vertical.style("left", mousex + "px" )
+                vertical.style("visibility", "visible")})
         .on("mouseover", function(){
                 mousex = d3.mouse(this);
                 mousex = mousex[0] + 5;
-                vertical.style("left", mousex + "px")});
+                vertical.style("left", mousex + "px")
+                vertical.style("visibility", "visible")})
+        .on("mouseout", function(){
+                    vertical.style("visibility", "hidden")});
     });
+    
 }
