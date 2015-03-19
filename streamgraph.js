@@ -17,6 +17,7 @@ function updateData1() {
     graph.remove();
     line.remove();
     chart("data_by_action_genre.csv", "blue");
+    
 }
 
 function updateData2() {  
@@ -206,6 +207,7 @@ var graph = d3.csv(csvpath, function(data) {
             //.duration(250)
                 //.attr('stroke-width', "3px");
                 .attr('opacity',".4");
+            
             })
             .on("mousemove", function(d, i) {
                 mousex = d3.mouse(this);
@@ -263,7 +265,7 @@ var graph = d3.csv(csvpath, function(data) {
             .style("font-size", "14px")
             .style("top", "143px")
             .style("bottom", "0px")
-            .text("in revenue.");
+            .text("in revenue");
     
         //Text for Height portion
         var LegendInfo3 = d3.select("svg")
@@ -316,12 +318,12 @@ var graph = d3.csv(csvpath, function(data) {
             .style("font-size", "14px")
             .style("top", "143px")
             .style("bottom", "0px")
-            .text("The");
+            .text("the");
     
         var LegendInfo8 = d3.select("svg")
             .append("text")
             .attr("y", 190)
-            .attr("x", width + 67)
+            .attr("x", width + 63)
             .attr("font-weight", "bold")
             .style("font-size", "14px")
             .style("top", "143px")
@@ -331,7 +333,7 @@ var graph = d3.csv(csvpath, function(data) {
         var LegendInfo9 = d3.select("svg")
             .append("text")
             .attr("y", 190)
-            .attr("x", width + 100)
+            .attr("x", width + 94)
             .style("font-size", "14px")
             .style("top", "143px")
             .style("bottom", "0px")
@@ -390,7 +392,7 @@ var graph = d3.csv(csvpath, function(data) {
             .style("font-size", "14px")
             .style("top", "143px")
             .style("bottom", "0px")
-            .text("through 2014.");
+            .text("through 2014");
     
     
     //Legend code for total revenue
@@ -468,7 +470,7 @@ var graph = d3.csv(csvpath, function(data) {
             .style("fill", z(0))
             .attr("font-size", "16px")
             .style("top", "143px")
-            .style("bottom", "0px") 
+            .style("bottom", "0px");
                  
          var rectLeg2 = d3.select("svg")
             .append("rect")
@@ -479,7 +481,7 @@ var graph = d3.csv(csvpath, function(data) {
             .style("fill", z(1))
             .attr("font-size", "16px")
             .style("top", "143px")
-            .style("bottom", "0px")
+            .style("bottom", "0px");
          
          var rectLeg3 = d3.select("svg")
             .append("rect")
@@ -490,7 +492,7 @@ var graph = d3.csv(csvpath, function(data) {
             .style("fill", z(2))
             .attr("font-size", "16px")
             .style("top", "143px")
-            .style("bottom", "0px")
+            .style("bottom", "0px");
                   
          var rectLeg4 = d3.select("svg")
             .append("rect")
@@ -501,7 +503,7 @@ var graph = d3.csv(csvpath, function(data) {
             .style("fill", z(3))
             .attr("font-size", "16px")
             .style("top", "143px")
-            .style("bottom", "0px")
+            .style("bottom", "0px");
          
           var rectLeg5 = d3.select("svg")
             .append("rect")
@@ -512,7 +514,7 @@ var graph = d3.csv(csvpath, function(data) {
             .style("fill", z(4))
             .attr("font-size", "16px")
             .style("top", "143px")
-            .style("bottom", "0px")
+            .style("bottom", "0px");
           
           var rectLeg6 = d3.select("svg")
             .append("rect")
@@ -523,7 +525,7 @@ var graph = d3.csv(csvpath, function(data) {
             .style("fill", z(5))
             .attr("font-size", "16px")
             .style("top", "143px")
-            .style("bottom", "0px")
+            .style("bottom", "0px");
     
     var vertical = d3.select(".chart")
             .append("div")
@@ -532,27 +534,15 @@ var graph = d3.csv(csvpath, function(data) {
             .style("position", "absolute")
             .style("z-index", "19")
             .style("width", "1px")
-            .style("height", "405px")
+            .style("height", "400px")
             //Change this variable to adjust the height of the dynamic white line.
-            .style("top", "195px")
+            .style("top", "270px")
             .style("bottom", "30px")
             .style("left", "0px")
             .style("background", "#fff")
             .style("visibility", "visible");
 
-        //Vertical bar at end of chart
-         var yAxisDiv = d3.select(".chart")
-            .append("div")
-            .attr("class", "remove")
-            .style("position", "absolute")
-            .style("z-index", "19")
-            .style("width", "1px")
-            .style("height", "455px")
-            //Change this variable to adjust the height of the dynamic white line.
-            .style("top", "195px")
-            .style("bottom", "0px")
-            .style("right", (margin.right - 19 + "px"))
-            .style("background", "#000000");
+
     
     //Changes position of white line
     d3.select(".chart")
