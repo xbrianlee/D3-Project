@@ -233,7 +233,7 @@ var graph = d3.csv(csvpath, function(data) {
                     .duration(250)
                     .attr('opacity', 1)
                     d3.select(this)
-                        .attr('stroke', 'none')
+                        .attr('stroke', '1px')
                         tooltip.html( "<h4>" + d.key + "<br>" + "Genre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].genre + "<br>" + "Company&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].company + "<br>" + "Console&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].console + "<br>" + "Annual Revenue&nbsp;: " + pro + " million USD" + "<br>" + "Total Revenue&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: " + d.values[mousedate].total + " million USD" + "<br>" + "</h4>" ).style("visibility", "hidden");
   });
 
