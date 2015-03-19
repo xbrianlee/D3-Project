@@ -66,7 +66,7 @@ strokecolor = colorrange[0];
 
 var format = d3.time.format("%m/%d/%y");
 
-var margin = {top: 20, right: 200, bottom: 45, left: 25};
+var margin = {top: 20, right: 45, bottom: 45, left: 25};
 var width = document.body.clientWidth - margin.left - margin.right;
 var height = 450 - margin.top - margin.bottom;
 
@@ -250,7 +250,7 @@ var graph = d3.csv(csvpath, function(data) {
             .style("bottom", "30px")
             .style("left", "0px")
             .style("background", "#fff");
-
+/*
          var yAxisDiv = d3.select(".chart")
             .append("div")
             .attr("class", "remove")
@@ -263,7 +263,7 @@ var graph = d3.csv(csvpath, function(data) {
             .style("top", "143px")
             .style("bottom", "0px")
             .style("right", (margin.right - 11 + "px"))
-            .style("background", "#000000");
+            .style("background", "#000000");*/
     
     d3.select(".chart")
         .on("mousemove", function(){
