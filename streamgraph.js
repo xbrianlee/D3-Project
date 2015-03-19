@@ -532,9 +532,9 @@ var graph = d3.csv(csvpath, function(data) {
             .style("position", "absolute")
             .style("z-index", "19")
             .style("width", "1px")
-            .style("height", "400px")
+            .style("height", "405px")
             //Change this variable to adjust the height of the dynamic white line.
-            .style("top", "270px")
+            .style("top", "195px")
             .style("bottom", "30px")
             .style("left", "0px")
             .style("background", "#fff")
@@ -544,15 +544,14 @@ var graph = d3.csv(csvpath, function(data) {
          var yAxisDiv = d3.select(".chart")
             .append("div")
             .attr("class", "remove")
-            .attr("id", "line")
             .style("position", "absolute")
             .style("z-index", "19")
             .style("width", "1px")
-            .style("height", "400px")
+            .style("height", "455px")
             //Change this variable to adjust the height of the dynamic white line.
-            .style("top", "270px")
+            .style("top", "195px")
             .style("bottom", "0px")
-            .style("right", (margin.right - 11 + "px"))
+            .style("right", (margin.right - 19 + "px"))
             .style("background", "#000000");
     
     //Changes position of white line
