@@ -15,12 +15,6 @@ body {
   font-size: 11px;
 }
 
-#our_intro {
-    text-align: center;
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;
-}
 
 text {
     stroke: black;
@@ -30,10 +24,21 @@ text {
     font-family:sans-serif;
 }
 
+#our_intro {
+    text-align: center;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 h1 {
     text-align:center; 
-    color:#FF7519;
+    color:DarkOrange;
     font-weight: bold;
+}
+
+b {
+    font-weight:bold;
 }
 
 h4, h5 {
@@ -95,25 +100,26 @@ button {
 #required_content{
     float: right;
     width: 48%;
-    height: "100px";
+}
+
+#legend{
+    float: right;
+    width: 48%;
+    color: white;
 }
 
 #d3_content{
     float: left;
     width: 48%;
     color: white;
-    height: "100px";
+}
+
+#tooltip_placement {
+    
 }
 
 #buttonContainer{
     margin-left: 27%;
     margin-right: 23%;
     width: 50%;
-}
-
-#lowest_content {
-    float: none;
-    text-align: left;
-    position: relative;
-    width: 98%;
 }
